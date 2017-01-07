@@ -141,6 +141,7 @@ public class HtspDataSource implements DataSource {
     }
 
     private void serializeMessageToBuffer(MuxpktResponse message) {
+        Log.w(TAG, "HtspDataSource - MSG_TYPE_MUXPKT");
         mBuffer.putShort(MSG_TYPE_MUXPKT);
 //        mBuffer.putInt(message.getSubscriptionId());
 //        mBuffer.putInt(message.getFrameType());
@@ -153,13 +154,15 @@ public class HtspDataSource implements DataSource {
     }
 
     private void serializeMessageToBuffer(SubscriptionStartResponse message) {
+        Log.w(TAG, "HtspDataSource - MSG_TYPE_SUBSCRIPTION_START");
         mBuffer.putShort(MSG_TYPE_SUBSCRIPTION_START);
-        mBuffer.putInt(message.getSubscriptionId());
+//        mBuffer.putInt(message.getSubscriptionId());
     }
 
     private void serializeMessageToBuffer(SubscriptionStatusResponse message) {
+        Log.w(TAG, "HtspDataSource - MSG_TYPE_SUBSCRIPTION_STATUS");
         mBuffer.putShort(MSG_TYPE_SUBSCRIPTION_STATUS);
-        mBuffer.putInt(message.getSubscriptionId());
+//        mBuffer.putInt(message.getSubscriptionId());
     }
 
     @Override
@@ -178,6 +181,8 @@ public class HtspDataSource implements DataSource {
 
         mConnection.sendMessage(unsubscribeRequest);
         mConnection.removeMessageListener(mSubscriptionTask);
+
+        mMessageQueue.clear();
     }
 
     private class SubscriptionTask extends MessageListener {
